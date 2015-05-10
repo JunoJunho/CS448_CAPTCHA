@@ -1,5 +1,10 @@
 from Tkinter import *
 
+root = Tk()
+frame = Frame(root)
+frame.pack()
 
-if __name__ == 'main':
-    print "Python Tk GUI"
+bottomframe = Frame(root)
+bottomframe.pack(side=BOTTOM)
+
+root.mainloop()
