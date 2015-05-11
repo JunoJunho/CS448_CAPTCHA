@@ -1,35 +1,55 @@
 from Tkinter import *
 from tkFileDialog import askopenfilenames
+from PIL import ImageTk, Image
 from CaptchaLibrary.CHARACTERIZER.INITIALIZATION import INITIALIZATION
 from CaptchaLibrary.CHARACTERIZER.CHARACTERIZER import CHARACTERIZER as Guesser
-import Tkconstants
+
 
 sys.path.append('./CaptchaLibrary')
+
 
 class TkFileDialog(Frame):
 
     init_theta1, init_theta2 = INITIALIZATION('./nn_params.txt')
     target_captcha = []
+    index = 0
 
     def __init__(self, root):
         Frame.__init__(self, root)
-        button_opt = {'fill': Tkconstants.BOTH, 'padx': 5, 'pady': 5}
+
+        self.parent = root
+        self.parent.title("Captcha Breaker")
+
         self.file_opt = options = {}
         options['filetypes'] = [('all files', '.*'), ('text files', '.txt')]
         options['parent'] = root
 
-        Button(self, text='Open File', command=self.askopenfile).pack(**button_opt)
-        Button(self, text='Break Captcha', command=self.handle_captcha_file).pack()
+        Button(self, text='Open File', command=self.askopenfile).grid(row=0, column=0, padx=5, pady=5)
+        Button(self, text='Break Captcha', command=self.handle_captcha_file).grid(row=1, column=0, padx=5, pady=5)
+        Button(self, text="next", command=self.next).grid(row=2, column=0, padx=5, pady=5)
+        captcha_image = Image.new("RGB", (200, 56), "black")
+        image_viewer = ImageTk.PhotoImage(captcha_image)
+        label1 = Label(self, image=image_viewer)
+        label1.grid(row=0, column=1, padx=5, pady=5)
+
+        self.predict_str = StringVar()
+
+        label2 = Label(self, textvariable=self.predict_str)
+        label2.grid(row=1, column=1, padx=5, pady=5)
 
     def askopenfile(self):
+        if self.index == len(self.target_captcha):
+            return
         filename = askopenfilenames(**self.file_opt)
         for each in filename:
             self.target_captcha.append(each)
 
     def handle_captcha_file(self):
-        for each in self.target_captcha:
-            guess_string = Guesser(self.init_theta1, self.init_theta2, each)
-            print "Filename: " + each + ", " + guess_string
+        guess_string = Guesser(self.init_theta1, self.init_theta2, self.target_captcha[self.index])
+        self.predict_str.set(guess_string)
+
+    def next(self):
+        self.index += 1
 
 if __name__ == '__main__':
     root = Tk()
