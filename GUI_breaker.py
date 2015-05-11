@@ -1,5 +1,5 @@
 from Tkinter import *
-from tkFileDialog import askopenfilename
+from tkFileDialog import askopenfilenames
 from CaptchaLibrary.CHARACTERIZER.INITIALIZATION import INITIALIZATION
 from CaptchaLibrary.CHARACTERIZER.CHARACTERIZER import CHARACTERIZER as Guesser
 import Tkconstants
@@ -9,6 +9,7 @@ sys.path.append('./CaptchaLibrary')
 class TkFileDialog(Frame):
 
     init_theta1, init_theta2 = INITIALIZATION('./nn_params.txt')
+    target_captcha = []
 
     def __init__(self, root):
         Frame.__init__(self, root)
@@ -18,18 +19,17 @@ class TkFileDialog(Frame):
         options['parent'] = root
 
         Button(self, text='Open File', command=self.askopenfile).pack(**button_opt)
+        Button(self, text='Break Captcha', command=self.handle_captcha_file).pack()
 
     def askopenfile(self):
-        filename = askopenfilename(**self.file_opt)
-        if filename:
-            self.handle_captcha_file(filename)
-            return filename
-        else:
-            print "There is no such file name!"
+        filename = askopenfilenames(**self.file_opt)
+        for each in filename:
+            self.target_captcha.append(each)
 
-    def handle_captcha_file(self, file_name):
-        guess_string = Guesser(self.init_theta1, self.init_theta2, file_name)
-        print guess_string
+    def handle_captcha_file(self):
+        for each in self.target_captcha:
+            guess_string = Guesser(self.init_theta1, self.init_theta2, each)
+            print "Filename: " + each + ", " + guess_string
 
 if __name__ == '__main__':
     root = Tk()
