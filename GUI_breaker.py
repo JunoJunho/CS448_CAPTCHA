@@ -36,6 +36,11 @@ class TkFileDialog(Frame):
         label2 = Label(self, textvariable=self.predict_str)
         label2.grid(row=1, column=1, padx=5, pady=5)
 
+        Label(self, text="Accuracy").grid(row=0, column=2, padx=5, pady=5)
+        self.accuracy_of_file = StringVar()
+        self.percentage_label = Label(self, textvariable=self.accuracy_of_file, width=7)
+        self.percentage_label.grid(row=1, column=2, padx=5, pady=5)
+
     def askopenfile(self):
         if self.index == len(self.target_captcha):
             return
