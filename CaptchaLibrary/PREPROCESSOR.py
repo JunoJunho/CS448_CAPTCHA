@@ -39,7 +39,7 @@ def PREPROCESSOR(inFile):
     #output: a matrix of X in memory (no y for the answer. THIS IS NOT A DRILL)
     X = MM(su_im_List)
 
-    f = open('./CHARACTERIZER/X.txt', 'w')
+    f = open('./CaptchaLibrary/CHARACTERIZER/X.txt', 'w')
     f.write(X)
     f.close()
 

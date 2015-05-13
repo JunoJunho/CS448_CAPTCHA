@@ -3,14 +3,14 @@ from tkFileDialog import askopenfilenames
 from PIL import ImageTk, Image
 from CaptchaLibrary.CHARACTERIZER.INITIALIZATION import INITIALIZATION
 from CaptchaLibrary.CHARACTERIZER.CHARACTERIZER import CHARACTERIZER as Guesser
-
+import sys
 
 sys.path.append('./CaptchaLibrary')
 
 
 class TkFileDialog(Frame):
 
-    init_theta1, init_theta2 = INITIALIZATION('./nn_params.txt')
+    init_theta1, init_theta2 = INITIALIZATION('./CaptchaLibrary/nn_params.txt')
     target_captcha = []
     index = -1
 

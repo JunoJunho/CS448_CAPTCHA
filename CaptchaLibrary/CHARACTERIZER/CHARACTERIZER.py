@@ -9,7 +9,7 @@ def CHARACTERIZER(Theta1, Theta2, inFile):
     PREPROCESSOR(inFile)
 
     ## =========== Part 2: Loading X and Parameters =============
-    X = loadtxt('./CHARACTERIZER/X.txt')
+    X = loadtxt('./CaptchaLibrary/CHARACTERIZER/X.txt')
     m = X.shape[0]
 
     #print('Saved Neural Network Parameters are all loaded...\n')
