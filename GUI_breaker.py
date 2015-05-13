@@ -40,8 +40,12 @@ class TkFileDialog(Frame):
 
         Label(self, text="Accuracy").grid(row=0, column=2, padx=5, pady=5)
         self.accuracy_of_file = StringVar()
-        self.percentage_label = Label(self, textvariable=self.accuracy_of_file, width=7)
+        self.percentage_label = Label(self, textvariable=self.accuracy_of_file, width=10)
         self.percentage_label.grid(row=1, column=2, padx=5, pady=5)
+
+        self.accuracy_of_char = StringVar()
+        self.character_accuracy_label = Label(self, textvariable=self.accuracy_of_char, width=10)
+        self.character_accuracy_label.grid(row=2, column=2, padx=5, pady=5)
 
     def askopenfile(self):
         if self.index == len(self.target_captcha):
@@ -53,17 +57,38 @@ class TkFileDialog(Frame):
     def handle_captcha_file(self):
         guess_string = Guesser(self.init_theta1, self.init_theta2, self.target_captcha[self.index])
         self.predict_str.set(guess_string)
-        self.total_try += 1
         if guess_string == self.target_captcha[self.index].split('/')[-1].split('.')[0]:
-            self.num_success += 1
-        self.accuracy_of_file.set(
-            str(round((float(self.num_success) / float(self.total_try)), 3) * 100))
+            self.calculate_file_level_accuracy(True)
+        else:
+            self.calculate_file_level_accuracy(False)
+        self.calculate_character_level_accuracy(guess_string,
+                                                self.target_captcha[self.index].split('/')[-1].split('.')[0])
 
     def next(self):
+        if len(self.target_captcha) == 0 or self.index == len(self.target_captcha)-1:
+            return
         self.index += 1
         self.predict_str.set("")
         self.captcha_image = Image.open(self.target_captcha[self.index])
         self.image_viewer.paste(self.captcha_image)
+
+    def calculate_file_level_accuracy(self, answer):
+        self.total_try += 1
+        if answer:
+            self.num_success += 1
+        self.accuracy_of_file.set(
+            "Whole: " + str(round((float(self.num_success) / float(self.total_try)), 3) * 100))
+
+    def calculate_character_level_accuracy(self, predict_string, answer):
+        len_str = len(predict_string)
+        num_success = 0
+        for i in range(0, len(predict_string)):
+            if predict_string[i] == answer[i]:
+                num_success += 1
+        self.accuracy_of_char.set(
+            "Char: " + str(round((float(num_success) / float(len_str)), 3) * 100)
+        )
+
 
 if __name__ == '__main__':
     root = Tk()
