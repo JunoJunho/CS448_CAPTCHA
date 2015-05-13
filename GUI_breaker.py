@@ -13,6 +13,8 @@ class TkFileDialog(Frame):
     init_theta1, init_theta2 = INITIALIZATION('./CaptchaLibrary/nn_params.txt')
     target_captcha = []
     index = -1
+    total_try = 0
+    num_success = 0
 
     def __init__(self, root):
         Frame.__init__(self, root)
@@ -51,6 +53,11 @@ class TkFileDialog(Frame):
     def handle_captcha_file(self):
         guess_string = Guesser(self.init_theta1, self.init_theta2, self.target_captcha[self.index])
         self.predict_str.set(guess_string)
+        self.total_try += 1
+        if guess_string == self.target_captcha[self.index].split('/')[-1].split('.')[0]:
+            self.num_success += 1
+        self.accuracy_of_file.set(
+            str(round((float(self.num_success) / float(self.total_try)), 3) * 100))
 
     def next(self):
         self.index += 1
