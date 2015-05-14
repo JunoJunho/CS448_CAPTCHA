@@ -179,7 +179,6 @@ class IEController:
                     return 1
                 
         raise 'Link ' + linktext + ' was not found.'
-	
 
     def ClickButton(self, name = '', caption = '', id = ''):
         if (caption == '' and name == '' and id == ''):
@@ -545,21 +544,21 @@ if __name__ == "__main__":
 
     # Text box manipulation demo
     str = ie.GetInputValue('txt')
-    ShowMessage('Current Value of the Text Box is: "' + str + \
+    ShowMessage('Current Value of the Text Box is: "' + str +
                 '".', 'TEXTBOX DEMO')
     ie.SetInputValue('txt', 'Some Text')
     ShowMessage('Text Box value changed to "Some Text".', 'TEXTBOX DEMO')
 
     # Text Area manipulation demo
     str = ie.GetTextArea('txtarea')
-    ShowMessage('Current value of the Text Area is:\n' + str, \
+    ShowMessage('Current value of the Text Area is:\n' + str,
                 'TEXTAREA DEMO')
     ie.SetTextArea('txtarea', 'Scorpions\nIron Maiden\nJudas Priest\nMotorhead')
     ShowMessage('Text Area value changed.', 'TEXTAREA DEMO') 
 
     # Select manipulation demo
     (optionvalue, optiontext) = ie.GetSelectValue('drinks')
-    ShowMessage('Current Drink Select option is: (value="' + optionvalue + \
+    ShowMessage('Current Drink Select option is: (value="' + optionvalue +
                 '", caption="' + optiontext + '")', 'SELECT DEMO')
     ie.SetSelectValue('drinks', optioncaption='Milk')
     ShowMessage('Changed Drink Select option to "Milk"', 'SELECT DEMO')
@@ -590,12 +589,12 @@ if __name__ == "__main__":
         state2 = 'checked'
     else:
         state2 = 'unchecked'
-    ShowMessage('Value of "Compact Disc" Checkbox: ' + state1 + \
+    ShowMessage('Value of "Compact Disc" Checkbox: ' + state1 +
                 '\nValue of "DVD" Checkbox: ' + state2, 'CHECKBOX DEMO')
     ie.SetCheckBoxState('cb1')
     ie.SetCheckBoxState('cb2', 0)
     ie.SetCheckBoxState('cb3', 1)
-    ShowMessage('Checked "Compact Disc" and "VHS tape". Unchecked "DVD".', \
+    ShowMessage('Checked "Compact Disc" and "VHS tape". Unchecked "DVD".',
                 'CHECKBOX DEMO')
 
     # Radio Group Demo
