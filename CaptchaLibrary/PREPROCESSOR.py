@@ -22,7 +22,6 @@ def PREPROCESSOR(inFile):
     cr_im_List = CR(cw_im)
     if len(cr_im_List) != 5:
         print '#FAILED ON GETTING FIVE .png FILES'
-    #		exit()
 
     #PART2: DECOLORIZE
     #input: a list of five image objects

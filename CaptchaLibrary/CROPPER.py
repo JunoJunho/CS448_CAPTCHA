@@ -11,30 +11,30 @@ def Toggle(b_inChar):
 # im.size[0]==200==column==x
 # im.size[1]==50 ==rows==y
 def Get_xe(im, pixels, xe):
-    #initial value
+    # initial value
     b_inChar = False
     for x in range(im.size[0]):
         n_cnt = 0
         for y in range(im.size[1]):
             n_cnt += 1
-            #let's find where character starts
+            # let's find where character starts
             if (pixels[x, y][2] > 0):
                 if (pixels[x,y][0] != 255 and pixels[x,y][1] != 255):
-                    #if iter looks for a way in a char, do it here.
+                    # if iter looks for a way in a char, do it here.
                     if ( b_inChar == False ):
                         b_inChar = Toggle(b_inChar)
                         xe.append(x)
-                    #if iter hits blue, no matter what it goes back to top
+                    # if iter hits blue, no matter what it goes back to top
                     break
-        #It gets here, no blue pixel in this ith column
+        # It gets here, no blue pixel in this ith column
         if (n_cnt == im.size[1]):
-            #So, if it's looking for a way out:
+            # So, if it's looking for a way out:
             if b_inChar == True:
                 b_inChar = Toggle(b_inChar)
                 xe.append(x)
-            #if it's looking for a way in:
+            # if it's looking for a way in:
             elif b_inChar == False:
-                #Needs to be taken care of in the 2nd FOR. So,
+                # Needs to be taken care of in the 2nd FOR. So,
                 pass
 
 
